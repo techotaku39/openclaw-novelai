@@ -1,0 +1,8 @@
+# Never publish local validation artifacts or generated media.
+live-test-output-*/
+LIVE-TEST-REPORT.md
+*.zip
+*.log
+.firecrawl/
+__pycache__/
+*.py[cod]

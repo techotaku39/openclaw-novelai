@@ -1,0 +1,25 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local research, generated outputs, and reports
+.firecrawl/
+outputs/
+live-test-output-*/
+LIVE-TEST-REPORT.md
+
+# Local archives and logs
+*.zip
+*.log
+Thumbs.db
+.DS_Store
