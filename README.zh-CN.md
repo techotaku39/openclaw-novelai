@@ -6,7 +6,11 @@
 
 本项目在 NovelAI 文字生成和上游 [NovelAI-Image-MCP](https://github.com/xinvxueyuan/NovelAI-Image-MCP) 之上增加工作流层，帮助 OpenClaw Agent 管理小说上下文、规划章节插图、选择图片操作、在高消耗操作前请求确认，并记录可复现的创作素材。
 
-公开 Skill 名称和推荐的 ClawHub slug 都是 `openclaw-novelai`。
+Skill 内部名称是 `openclaw-novelai`，ClawHub slug 是 `novelai-workflows`。
+
+- GitHub：[techotaku39/openclaw-novelai](https://github.com/techotaku39/openclaw-novelai)
+- ClawHub：[@techotaku39/novelai-workflows](https://clawhub.ai/techotaku39/skills/novelai-workflows)（发布后可用）
+- 从 ClawHub 安装：`openclaw skills install @techotaku39/novelai-workflows`
 
 > 本项目与 OpenClaw 或 NovelAI 没有隶属、赞助或官方认可关系。
 
@@ -132,7 +136,7 @@ python -m py_compile scripts\project_state.py scripts\live_api_test.py tests\tes
 
 1. 使用 GitHub 作为源码主仓库。
 2. 为版本创建 Tag，并保持 `SKILL.md` frontmatter 中的名称稳定。
-3. 将 Skill 发布或同步到 [ClawHub](https://clawhub.ai/)，名称使用 `openclaw-novelai`。
+3. 将 Skill 发布或同步到 [ClawHub](https://clawhub.ai/)，slug 使用 `novelai-workflows`。
 4. 不要把生成图片、账户报告、`.env` 文件、缓存和压缩包提交到公开仓库。
 
 发布前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)、[SECURITY.md](SECURITY.md) 和 [NOTICE.md](NOTICE.md)。

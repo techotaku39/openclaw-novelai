@@ -4,7 +4,11 @@ An unofficial OpenClaw Skill for NovelAI fiction and image workflows.
 
 The project adds a workflow layer around NovelAI text generation and the upstream [NovelAI-Image-MCP](https://github.com/xinvxueyuan/NovelAI-Image-MCP). It helps an OpenClaw agent maintain story context, plan chapter illustrations, choose image operations, request cost confirmation, and record reproducible assets.
 
-The public Skill name and recommended ClawHub slug are `openclaw-novelai`.
+The Skill name is `openclaw-novelai`; the ClawHub slug is `novelai-workflows`.
+
+- GitHub: [techotaku39/openclaw-novelai](https://github.com/techotaku39/openclaw-novelai)
+- ClawHub: [@techotaku39/novelai-workflows](https://clawhub.ai/techotaku39/skills/novelai-workflows) (available after publication)
+- Install from ClawHub: `openclaw skills install @techotaku39/novelai-workflows`
 
 > This project is not affiliated with or endorsed by OpenClaw or NovelAI.
 
@@ -130,7 +134,7 @@ Recommended distribution:
 
 1. Use GitHub as the canonical source repository.
 2. Tag releases and keep the `SKILL.md` frontmatter name stable.
-3. Publish or sync the Skill to [ClawHub](https://clawhub.ai/) as `openclaw-novelai`.
+3. Publish or sync the Skill to [ClawHub](https://clawhub.ai/) as `novelai-workflows`.
 4. Keep generated images, account-specific reports, `.env` files, caches, and archives out of the public repository.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [NOTICE.md](NOTICE.md) before publishing.
