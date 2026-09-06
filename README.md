@@ -7,7 +7,7 @@ The project adds a workflow layer around NovelAI text generation and the upstrea
 The Skill name is `openclaw-novelai`; the ClawHub slug is `novelai-workflows`.
 
 - GitHub: [techotaku39/openclaw-novelai](https://github.com/techotaku39/openclaw-novelai)
-- ClawHub: [@techotaku39/novelai-workflows](https://clawhub.ai/techotaku39/skills/novelai-workflows) (available after publication)
+- ClawHub: [@techotaku39/novelai-workflows](https://clawhub.ai/techotaku39/skills/novelai-workflows)
 - Install from ClawHub: `openclaw skills install @techotaku39/novelai-workflows`
 
 > This project is not affiliated with or endorsed by OpenClaw or NovelAI.
@@ -31,6 +31,8 @@ This Skill is an orchestration guide, not a replacement image API implementation
 - [English quick-start guide](docs/QUICK-START.md)
 - [Chinese full user manual](docs/完整使用手册.md)
 - [Chinese quick-start guide](docs/快速入门用法.md)
+- [Costs and quotas](docs/COSTS-AND-QUOTAS.md) — NovelAI Anlas, Opus free images, and V5 usage limits.
+- [费用与额度说明](docs/费用与额度说明.md)
 - [Compatibility notes](COMPATIBILITY.md) — sanitized capability and limitation summary.
 
 ## Repository layout
@@ -46,8 +48,10 @@ CONTRIBUTING.md
 CHANGELOG.md
 .clawhubignore
 docs/
+  COSTS-AND-QUOTAS.md
   FULL-USER-MANUAL.md
   QUICK-START.md
+  费用与额度说明.md
   完整使用手册.md
   快速入门用法.md
 examples/

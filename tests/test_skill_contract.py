@@ -14,7 +14,7 @@ class SkillContractTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertTrue(content.startswith("---\n"))
         self.assertIn("name: openclaw-novelai", content)
-        self.assertIn("version: 0.1.0", content)
+        self.assertIn("version: 0.1.1", content)
         self.assertRegex(content, r"(?m)^description: .+")
         self.assertIn('metadata: {"openclaw"', content)
         self.assertIn('"NOVELAI_TOKEN"', content)

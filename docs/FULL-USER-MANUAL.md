@@ -417,7 +417,9 @@ Keep originals, edited results, and intermediate outputs in separate files.
 
 ## 8. Costs and confirmation
 
-These operations may consume NovelAI resources:
+See [Costs and Quotas](COSTS-AND-QUOTAS.md) for the detailed Anlas and Opus/V5 rules. In short, text generation, account queries, cost estimates, tag suggestions, and local project records do not consume NovelAI Anlas. Image-producing operations may be free only under the active Opus conditions described in that document.
+
+These operations require a cost check before execution:
 
 - text-to-image;
 - img2img;
@@ -427,13 +429,15 @@ These operations may consume NovelAI resources:
 - dedicated upscaling;
 - high resolutions and multiple samples.
 
+V5 free generations consume a separate rechargeable Usage Limit even when the estimated Anlas cost is zero. Do not treat the current approximate daily refill rate as a fixed daily quota.
+
 Use this wording for cautious operation:
 
 ```text
 Estimate the cost first and show the model, dimensions, steps, sample count, and estimated Anlas. Do not generate until I confirm.
 ```
 
-Start with one small image before trying a batch or a high-resolution request.
+Start with one single, low-cost image before trying a batch or a high-resolution request. Check the estimate rather than assuming that a UI size label is free.
 
 ## 9. Common problems
 
@@ -474,7 +478,7 @@ The current `/ai/upscale` route may be unavailable. Do not retry indefinitely; u
 Give the agent the package and this message:
 
 ```text
-Please unpack and read README.md, SKILL.md, docs/FULL-USER-MANUAL.md, docs/QUICK-START.md, and COMPATIBILITY.md.
+Please unpack and read README.md, SKILL.md, docs/FULL-USER-MANUAL.md, docs/QUICK-START.md, docs/COSTS-AND-QUOTAS.md, and COMPATIBILITY.md.
 
 First inspect the current OpenClaw, Python, uv, uvx, Skill search path, and MCP configuration. Do not install anything, modify configuration, or generate an image immediately. Do not ask for, print, or record the value of NOVELAI_TOKEN; only check whether it is available through the secure host environment.
 

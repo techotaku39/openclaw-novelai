@@ -9,7 +9,7 @@
 Skill 内部名称是 `openclaw-novelai`，ClawHub slug 是 `novelai-workflows`。
 
 - GitHub：[techotaku39/openclaw-novelai](https://github.com/techotaku39/openclaw-novelai)
-- ClawHub：[@techotaku39/novelai-workflows](https://clawhub.ai/techotaku39/skills/novelai-workflows)（发布后可用）
+- ClawHub：[@techotaku39/novelai-workflows](https://clawhub.ai/techotaku39/skills/novelai-workflows)
 - 从 ClawHub 安装：`openclaw skills install @techotaku39/novelai-workflows`
 
 > 本项目与 OpenClaw 或 NovelAI 没有隶属、赞助或官方认可关系。
@@ -33,6 +33,8 @@ Skill 内部名称是 `openclaw-novelai`，ClawHub slug 是 `novelai-workflows`�
 - [英文快速入门指南](docs/QUICK-START.md)
 - [中文完整使用手册](docs/完整使用手册.md)
 - [中文快速入门用法](docs/快速入门用法.md)
+- [英文费用与额度说明](docs/COSTS-AND-QUOTAS.md) —— NovelAI Anlas、Opus 免费生图和 V5 使用额度。
+- [中文费用与额度说明](docs/费用与额度说明.md)
 - [兼容性说明](COMPATIBILITY.md) —— 已脱敏的能力和限制摘要。
 
 ## 仓库结构
@@ -48,8 +50,10 @@ CONTRIBUTING.md
 CHANGELOG.md
 .clawhubignore
 docs/
+  COSTS-AND-QUOTAS.md
   FULL-USER-MANUAL.md
   QUICK-START.md
+  费用与额度说明.md
   完整使用手册.md
   快速入门用法.md
 examples/

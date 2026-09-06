@@ -6,6 +6,8 @@ This guide focuses on everyday use and on how to describe tasks to the agent.
 
 Think of OpenClaw as an assistant that can operate NovelAI: describe what you want in natural language, and it can choose the appropriate capability, read your story materials, generate text or images, and save the results.
 
+For a plain-language explanation of what is free, what uses Anlas, and how the V5 Usage Limit works, see [Costs and Quotas](COSTS-AND-QUOTAS.md).
+
 ## The basic pattern
 
 Tell the agent:
