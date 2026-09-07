@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added the local `openclaw-novelai-free` zero-Anlas policy variant under `variants/`.
+- Added the local `openclaw-novelai-opus-free` Opus enhancement variant with the latest live-tested zero-Anlas boundaries.
+- Updated cost documentation to distinguish official rules, empirical account tests, and conservative policy blocks.
+
 ## 0.1.1 - 2026-09-06
 
 - Added Chinese and English cost/quota guides for NovelAI Anlas, Opus free images, and V5 usage limits.

@@ -59,7 +59,29 @@ When the free conditions are met, V5 uses the separate Opus Usage Limit. The acc
 
 Some accounts or periods may show approximately 11% per day, or approximately 190 images per day. This is an example of the current UI refill rate, not a fixed daily grant. The allowance refills continuously, and actual image equivalents depend on resolution, Steps, and current service rules. The official announcement says a completely empty allowance takes about a week to recharge.
 
-## 4. Operations that consume Anlas or require confirmation
+## 4. Live results from the reference Opus account
+
+The following results came from real API tests on 2026-09-06 using an active Opus account. Requests used normal dimensions and one image. Subscription Anlas, Paid Anlas, and the V5 Usage Limit were queried before and after each operation. Charged items were repeated with paired pre/post samples using the shared token; no external balance drift was observed during those retests.
+
+| Operation | Observed result | Notes |
+| --- | --- | --- |
+| Single V5 / V4.5 text-to-image | 0 Anlas | 8 and 28 Steps, normal dimensions |
+| V4.5 img2img | 0 Anlas | 8 and 28 Steps, normal dimensions; account-specific evidence |
+| V4.5 inpainting | 0 Anlas | 8 and 28 Steps, normal dimensions; account-specific evidence |
+| Generation with an already encoded V4/V4.5 Vibe | 0 Anlas | New Vibe encoding is separate and charged |
+| `annotate_image` | 0 Anlas | ControlNet preprocessing test |
+| Director lineart, sketch, declutter, colorize, emotion | 0 Anlas | Normal-size source image |
+| Director background removal | 65 Anlas | Observed account charge |
+| Vibe encoding | 2 Anlas | V4+ one-time encoding charge; re-encoding charges again |
+| Two images in one request | 8 Anlas | Observed account charge |
+| 1536x1024 single image | 12 Anlas | Observed account charge |
+| 29-Step single image | 20 Anlas | Observed account charge |
+| Dedicated upscale | No image | Current `/ai/upscale` returned 404 |
+| Enhance and Precise Reference | Not tested | Not exposed as independent tools by the reference MCP |
+
+These are empirical results for one account, one MCP version, and concrete parameters, not a permanent NovelAI pricing promise. Img2img, inpainting, and the free Director subset were zero in this test, but must still be estimated and followed by a balance audit on every use.
+
+## 5. Operations that consume Anlas or require confirmation
 
 | Skill operation or parameter | Anlas rule |
 | --- | --- |
@@ -67,19 +89,26 @@ Some accounts or periods may show approximately 11% per day, or approximately 19
 | Multiple images in one request | Always costs Anlas, even for Opus; more images increase the cost |
 | Higher resolution | Normally costs Anlas |
 | More than 28 Steps | Normally costs Anlas |
-| `image_to_image` with a base image | Treat as potentially charged; the official free conditions exclude base-image requests |
-| Ordinary `inpaint` | Treat as potentially charged because it regenerates an area from an image and mask |
+| `image_to_image` with a base image | Zero in the tested Opus parameters; official conditions are more conservative, so require an exact estimate and balance audit |
+| Ordinary `inpaint` | Zero in the tested Opus parameters; other sizes, models, or settings may charge |
 | Focused Inpainting | The official docs explicitly say that Opus can inpaint regions of large images at zero Anlas; still follow the current tool estimate |
 | `enhance` | Runs the image through NovelAI Diffusion again; treat it as another potentially charged image operation |
 | `encode_vibe` | V4+ encoding costs 2 Anlas once; re-encoding after changing Information Extracted costs again |
 | Vibe generation | The base image request rules still apply; for V4+ each Vibe beyond the first four adds 2 Anlas |
 | Precise Reference | The official docs charge an additional 5 Anlas per reference image, per generation; currently V4.5 only |
-| `director_tool` | The official feature page does not publish one complete price table; this Skill treats it as potentially charged, especially background removal |
+| `director_tool` | Lineart, sketch, declutter, colorize, and emotion were zero in the test; background removal charged 65, and other operations are not automatically free |
+| `annotate_image` | Zero in the ControlNet preprocessing test; a later image generation is still billed by its own rules |
 | `upscale_image` | The reference environment's dedicated `/ai/upscale` route currently returns 404 and produces no successful image; if it returns, estimate first |
 
 Multi-character prompts, character positions, seeds, samplers, negative prompts, and ordinary tags do not add a separate fee; their cost belongs to the enclosing image request.
 
-## 5. Safe operating pattern
+## 6. Variant policies
+
+- `openclaw-novelai-free`: the strictest variant; it allows only the narrowest image path with an explicit zero estimate and does not allow img2img, inpainting, or Director tools.
+- `openclaw-novelai-opus-free`: requires active Opus, normal dimensions, one image, 28 Steps or fewer, an explicit zero estimate, and a post-operation balance audit. It allows the tested-free img2img, inpainting, pre-encoded Vibe generation, annotation, and selected Director tools.
+- Both variants block Vibe encoding, background removal, Precise Reference, Enhance, dedicated upscaling, batches, high resolution, and more than 28 Steps.
+
+## 7. Safe operating pattern
 
 Before any image output, ask the agent to do this:
 
@@ -98,15 +127,15 @@ Tell me whether the current estimate is 0 Anlas first; if it is not 0, do not ge
 
 For Vibe, inpainting, Director, Enhance, or batch work, do not say only “try it for free.” Explicitly request a cost estimate first.
 
-## 6. Quick reference
+## 8. Quick reference
 
 - Text and TTS: no NovelAI Anlas within an active subscription.
 - Queries, estimates, tag suggestions, and local records: no Anlas.
-- Opus + one image + normal size + no more than 28 Steps + no base image: may be 0 Anlas.
+- Opus + one image + normal size + no more than 28 Steps: may be 0 Anlas; img2img and inpainting require the current estimate and balance audit.
 - V5 at 0 Anlas: it still consumes the separate Usage Limit.
-- Batches, higher resolution, more than 28 Steps, base images, Vibes, references, Director tools, and second-pass processing: estimate first and confirm.
+- Batches, higher resolution, more than 28 Steps, Vibe encoding, references, background removal, and second-pass processing: treat as charged or unverified.
 
-## 7. Official references
+## 9. Official references
 
 - [NovelAI Subscription](https://docs.novelai.net/en/subscription/)
 - [NovelAI FAQ — Opus Usage Limits](https://docs.novelai.net/en/faq/)

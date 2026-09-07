@@ -33,6 +33,10 @@ This Skill is an orchestration guide, not a replacement image API implementation
 - [Chinese quick-start guide](docs/快速入门用法.md)
 - [Costs and quotas](docs/COSTS-AND-QUOTAS.md) — NovelAI Anlas, Opus free images, and V5 usage limits.
 - [费用与额度说明](docs/费用与额度说明.md)
+- [Zero-Anlas variant](variants/openclaw-novelai-free/README.md) — restricted mode that never falls back to paid image operations.
+- [零 Anlas 中文变体](variants/openclaw-novelai-free/README.zh-CN.md)
+- [Opus free enhancement variant](variants/openclaw-novelai-opus-free/README.md) — Opus-only zero-Anlas img2img, inpainting, annotation, pre-encoded Vibe, and tested-free Director subset.
+- [Opus 免费增强中文变体](variants/openclaw-novelai-opus-free/README.zh-CN.md)
 - [Compatibility notes](COMPATIBILITY.md) — sanitized capability and limitation summary.
 
 ## Repository layout
@@ -54,6 +58,13 @@ docs/
   费用与额度说明.md
   完整使用手册.md
   快速入门用法.md
+variants/
+  openclaw-novelai-free/
+    SKILL.md
+  openclaw-novelai-opus-free/
+    SKILL.md
+    README.md
+    README.zh-CN.md
 examples/
   openclaw.config.example.json5
 scripts/

@@ -6,3 +6,4 @@ LIVE-TEST-REPORT.md
 .firecrawl/
 __pycache__/
 *.py[cod]
+variants/

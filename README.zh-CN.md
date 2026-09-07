@@ -35,6 +35,10 @@ Skill 内部名称是 `openclaw-novelai`，ClawHub slug 是 `novelai-workflows`�
 - [中文快速入门用法](docs/快速入门用法.md)
 - [英文费用与额度说明](docs/COSTS-AND-QUOTAS.md) —— NovelAI Anlas、Opus 免费生图和 V5 使用额度。
 - [中文费用与额度说明](docs/费用与额度说明.md)
+- [英文零 Anlas 变体](variants/openclaw-novelai-free/README.md) —— 严格禁止付费图片操作的变体。
+- [中文零 Anlas 变体](variants/openclaw-novelai-free/README.zh-CN.md)
+- [英文 Opus 免费增强变体](variants/openclaw-novelai-opus-free/README.md) —— 放行实测为零 Anlas 的图生图、局部重绘和部分 Director 工具。
+- [中文 Opus 免费增强变体](variants/openclaw-novelai-opus-free/README.zh-CN.md)
 - [兼容性说明](COMPATIBILITY.md) —— 已脱敏的能力和限制摘要。
 
 ## 仓库结构
@@ -56,6 +60,13 @@ docs/
   费用与额度说明.md
   完整使用手册.md
   快速入门用法.md
+variants/
+  openclaw-novelai-free/
+    SKILL.md
+  openclaw-novelai-opus-free/
+    SKILL.md
+    README.md
+    README.zh-CN.md
 examples/
   openclaw.config.example.json5
 scripts/
