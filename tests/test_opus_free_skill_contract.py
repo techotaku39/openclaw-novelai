@@ -14,7 +14,7 @@ class OpusFreeSkillContractTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertTrue(content.startswith("---\n"))
         self.assertIn("name: openclaw-novelai-opus-free", content)
-        self.assertIn("version: 0.2.0", content)
+        self.assertIn("version: 0.2.1", content)
         self.assertRegex(content, r"(?m)^description: .+")
         self.assertIn('"primaryEnv":"NOVELAI_TOKEN"', content)
 
@@ -34,6 +34,15 @@ class OpusFreeSkillContractTests(unittest.TestCase):
         self.assertIn("explicit numeric cost of exactly `0` Anlas", content)
         self.assertIn("opus_free_sample=true", content)
         self.assertIn("account balance decreases", content)
+
+    def test_skill_reuses_verified_profile_for_same_session(self) -> None:
+        content = SKILL.read_text(encoding="utf-8")
+        self.assertIn("Session-scoped zero-cost verification lease", content)
+        self.assertIn("no time limit and no reuse-count limit", content)
+        self.assertIn("same conversation", content)
+        self.assertIn("all billing-affecting fields must remain unchanged", content)
+        self.assertIn("OpenClaw or MCP restarts", content)
+        self.assertIn("do not narrate another account check or estimator call", content)
 
     def test_skill_allows_tested_free_enhancements(self) -> None:
         content = SKILL.read_text(encoding="utf-8")

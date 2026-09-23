@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Improved the Opus Free variant to reuse a verified zero-Anlas billing profile throughout the same session while parameters remain unchanged.
 - Added the local `openclaw-novelai-free` zero-Anlas policy variant under `variants/`.
 - Added the local `openclaw-novelai-opus-free` Opus enhancement variant with the latest live-tested zero-Anlas boundaries.
 - Updated cost documentation to distinguish official rules, empirical account tests, and conservative policy blocks.

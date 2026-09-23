@@ -35,7 +35,7 @@ All conditions must hold:
 8. Img2img/inpaint may use a base image or mask only when the exact estimator returns zero; Vibe may use only existing encoded V4/V4.5 references; Director is limited to the five tested tools and excludes background removal;
 9. There is no batch, parallel generation, or automatic retry.
 
-If any condition is not met, the image tool must not be called. Query the balance after each image operation and stop if Anlas changes.
+If any condition is not met, the image tool must not be called. After the first successful gate and balance audit, the same conversation may reuse the verified billing profile indefinitely while billing-affecting parameters remain unchanged. Do not repeat account or estimator calls for a matching request. Invalidate the session lease on a new conversation, OpenClaw/MCP restart, parameter change, tool error, account warning, explicit cost recheck request, or any reported Anlas/Usage Limit discrepancy.
 
 ## Explicitly blocked
 

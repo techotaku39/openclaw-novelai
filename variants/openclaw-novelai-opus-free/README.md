@@ -6,6 +6,8 @@ This variant keeps story writing, prompt planning, account queries, cost estimat
 
 It blocks Vibe encoding, background removal, Precise Reference, Enhance, dedicated upscaling, batches, high-resolution generation, more than 28 Steps, and any paid fallback.
 
+After the first successful zero-Anlas verification, the same conversation may reuse the verified billing profile indefinitely while billing-affecting parameters remain unchanged. The lease is invalidated by a new conversation, OpenClaw/MCP restart, parameter change, tool error, account warning, or explicit cost recheck request.
+
 ## Important distinction
 
 Zero Anlas is not zero usage:
