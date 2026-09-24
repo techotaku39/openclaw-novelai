@@ -1,7 +1,7 @@
 ---
 name: openclaw-novelai
-description: NovelAI creative workflows for OpenClaw: fiction context, chapter planning, image prompting, V5/V4.5 generation, img2img, inpainting, Vibe/Director tools, cost-aware execution, same-session billing-profile reuse, bounded transient retries, and secret-safe asset records.
-version: 0.1.2
+description: 'NovelAI creative workflows for OpenClaw: fiction context, chapter planning, image prompting, V5/V4.5 generation, img2img, inpainting, Vibe/Director tools, cost-aware execution, same-session billing-profile reuse, bounded transient retries, and secret-safe asset records.'
+version: 0.1.3
 metadata: {"openclaw":{"os":["win32","linux","darwin"],"requires":{"env":["NOVELAI_TOKEN"],"bins":["python"]},"primaryEnv":"NOVELAI_TOKEN","homepage":"https://github.com/techotaku39/openclaw-novelai"}}
 ---
 

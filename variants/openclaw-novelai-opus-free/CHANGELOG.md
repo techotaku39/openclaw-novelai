@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3 - 2026-09-24
+
+- Fixed strict YAML consumers rejecting the unquoted description containing `: `.
+
 ## 0.2.2 - 2026-09-24
 
 - Added up to three sequential retries after the initial attempt for transient failures.

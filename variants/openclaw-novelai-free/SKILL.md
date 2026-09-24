@@ -1,7 +1,7 @@
 ---
 name: openclaw-novelai-free
-description: Zero-Anlas NovelAI workflows for OpenClaw: fiction writing, story planning, account checks, cost estimates, tag suggestions, same-session verification reuse, bounded transient retries, and strictly guarded single-image generation only when the current tool proves the estimate is 0 Anlas.
-version: 0.1.1
+description: 'Zero-Anlas NovelAI workflows for OpenClaw: fiction writing, story planning, account checks, cost estimates, tag suggestions, same-session verification reuse, bounded transient retries, and strictly guarded single-image generation only when the current tool proves the estimate is 0 Anlas.'
+version: 0.1.2
 metadata: {"openclaw":{"os":["win32","linux","darwin"],"requires":{"env":["NOVELAI_TOKEN"]},"primaryEnv":"NOVELAI_TOKEN","homepage":"https://github.com/techotaku39/openclaw-novelai/tree/main/variants/openclaw-novelai-free"}}
 ---
 

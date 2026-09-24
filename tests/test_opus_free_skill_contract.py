@@ -14,8 +14,9 @@ class OpusFreeSkillContractTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertTrue(content.startswith("---\n"))
         self.assertIn("name: openclaw-novelai-opus-free", content)
-        self.assertIn("version: 0.2.2", content)
+        self.assertIn("version: 0.2.3", content)
         self.assertRegex(content, r"(?m)^description: .+")
+        self.assertRegex(content, r"(?m)^description: '.+: .+'$")
         self.assertIn('"primaryEnv":"NOVELAI_TOKEN"', content)
 
         frontmatter_end = content.find("\n---\n", 4)

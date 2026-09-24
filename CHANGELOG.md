@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fixed strict YAML parsing of all three Skill frontmatter descriptions by quoting values containing colon-space sequences.
 - Synchronized the main Skill and strict Free variant with the Opus Free same-session billing-profile reuse and bounded transient retry policy.
 - Added versioned updates for the main Skill (`0.1.2`) and strict Free variant (`0.1.1`).
 - Added up to three sequential retries for transient Opus Free image-operation failures while preserving exact parameters and billing safeguards.

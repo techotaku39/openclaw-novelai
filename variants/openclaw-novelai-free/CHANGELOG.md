@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 - 2026-09-24
+
+- Fixed strict YAML consumers rejecting the unquoted description containing `: `.
+
 ## 0.1.1 - 2026-09-24
 
 - Added same-session reuse of a verified zero-Anlas billing profile when parameters remain unchanged.
