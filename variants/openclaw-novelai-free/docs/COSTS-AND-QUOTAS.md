@@ -30,7 +30,7 @@ All conditions must hold:
 6. The resolution is within the normal range;
 7. Steps are 28 or fewer;
 8. There is no base image, mask, reference image, Vibe, Precise Reference, Director, Enhance, or upscale operation;
-9. There is no batch, parallel generation, or automatic retry.
+9. There is no batch, parallel generation, or parallel retry. After the first successful gate, the same conversation may reuse the verified billing profile indefinitely while billing-affecting parameters remain unchanged. A transient failure may be retried sequentially up to 3 times after the initial attempt; ambiguous or billing-related failures are not retried automatically.
 
 If any condition is not met, the image tool must not be called.
 

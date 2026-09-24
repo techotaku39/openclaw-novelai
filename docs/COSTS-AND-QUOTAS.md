@@ -37,6 +37,12 @@ The following operations do not generate an image and therefore do not consume N
 
 “No Anlas” does not mean “no model cost”: a text provider may be metered, and a free V5 image still uses the separate Usage Limit.
 
+## 2.1 Session billing profiles and transient retries
+
+After a successful account/cost verification, the main Skill may keep a redacted billing profile in memory for the current conversation. It may reuse that profile indefinitely when the operation type, model, dimensions, Steps, image count, sampler/scale/noise, base image, mask, reference, Vibe, and Director operation remain unchanged. A new conversation, restart, parameter change, account warning, tool error, ambiguous processing result, or explicit recheck request invalidates it.
+
+Each user-requested image operation may retry a clearly transient failure up to 3 times after the initial attempt, sequentially and with identical parameters. Do not retry parameter, authentication, billing, account, Usage Limit, or ambiguous failures.
+
 ## 3. Opus free-image conditions
 
 An Opus basic free image must satisfy all of these conditions:

@@ -14,7 +14,7 @@ class FreeSkillContractTests(unittest.TestCase):
         content = FREE_SKILL.read_text(encoding="utf-8")
         self.assertTrue(content.startswith("---\n"))
         self.assertIn("name: openclaw-novelai-free", content)
-        self.assertIn("version: 0.1.0", content)
+        self.assertIn("version: 0.1.1", content)
         self.assertRegex(content, r"(?m)^description: .+")
         self.assertIn('"primaryEnv":"NOVELAI_TOKEN"', content)
 
@@ -50,6 +50,14 @@ class FreeSkillContractTests(unittest.TestCase):
         content = FREE_SKILL.read_text(encoding="utf-8")
         self.assertIsNone(re.search(r"(?i)\bpst-[A-Za-z0-9_-]{20,}\b", content))
         self.assertIsNone(re.search(r"(?i)\bsk-[A-Za-z0-9_-]{20,}\b", content))
+
+    def test_free_skill_reuses_profile_and_retries_transient_failures(self) -> None:
+        content = FREE_SKILL.read_text(encoding="utf-8")
+        self.assertIn("Session-scoped zero-cost verification lease", content)
+        self.assertIn("reuse the verified profile indefinitely", content)
+        self.assertIn("up to 3 sequential retries after the initial attempt", content)
+        self.assertIn("Do not retry parameter errors, authentication/billing errors", content)
+        self.assertIn("ambiguous", content)
 
 
 if __name__ == "__main__":

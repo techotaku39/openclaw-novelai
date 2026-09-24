@@ -8,6 +8,8 @@ It blocks Vibe encoding, background removal, Precise Reference, Enhance, dedicat
 
 After the first successful zero-Anlas verification, the same conversation may reuse the verified billing profile indefinitely while billing-affecting parameters remain unchanged. The lease is invalidated by a new conversation, OpenClaw/MCP restart, parameter change, tool error, account warning, or explicit cost recheck request.
 
+Transient image-operation failures are retried sequentially up to three times after the initial attempt with identical parameters. Parameter errors, authentication or billing errors, account/Usage Limit warnings, and ambiguous cases where the provider may already have accepted the request are not retried automatically.
+
 ## Important distinction
 
 Zero Anlas is not zero usage:

@@ -14,7 +14,7 @@ class OpusFreeSkillContractTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertTrue(content.startswith("---\n"))
         self.assertIn("name: openclaw-novelai-opus-free", content)
-        self.assertIn("version: 0.2.1", content)
+        self.assertIn("version: 0.2.2", content)
         self.assertRegex(content, r"(?m)^description: .+")
         self.assertIn('"primaryEnv":"NOVELAI_TOKEN"', content)
 
@@ -43,6 +43,14 @@ class OpusFreeSkillContractTests(unittest.TestCase):
         self.assertIn("all billing-affecting fields must remain unchanged", content)
         self.assertIn("OpenClaw or MCP restarts", content)
         self.assertIn("do not narrate another account check or estimator call", content)
+
+    def test_skill_retries_only_transient_failures(self) -> None:
+        content = SKILL.read_text(encoding="utf-8")
+        self.assertIn("up to 3 times after the initial attempt", content)
+        self.assertIn("Retry the exact same operation and parameters", content)
+        self.assertIn("transient `5xx`", content)
+        self.assertIn("do not retry automatically", content)
+        self.assertIn("ambiguous", content)
 
     def test_skill_allows_tested_free_enhancements(self) -> None:
         content = SKILL.read_text(encoding="utf-8")

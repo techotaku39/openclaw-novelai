@@ -14,7 +14,7 @@ class SkillContractTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertTrue(content.startswith("---\n"))
         self.assertIn("name: openclaw-novelai", content)
-        self.assertIn("version: 0.1.1", content)
+        self.assertIn("version: 0.1.2", content)
         self.assertRegex(content, r"(?m)^description: .+")
         self.assertIn('metadata: {"openclaw"', content)
         self.assertIn('"NOVELAI_TOKEN"', content)
@@ -48,6 +48,14 @@ class SkillContractTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertIsNone(re.search(r"(?i)\bpst-[A-Za-z0-9_-]{20,}\b", content))
         self.assertIsNone(re.search(r"(?i)\bsk-[A-Za-z0-9_-]{20,}\b", content))
+
+    def test_skill_reuses_profile_and_retries_transient_failures(self) -> None:
+        content = SKILL.read_text(encoding="utf-8")
+        self.assertIn("Session-scoped billing profile and retry policy", content)
+        self.assertIn("Reuse the profile indefinitely in the same conversation", content)
+        self.assertIn("up to 3 sequential retries after the initial attempt", content)
+        self.assertIn("Do not retry `400`, `401`, `402`", content)
+        self.assertIn("ambiguous", content)
         self.assertIn("Never ask the user to paste a NovelAI token", content)
 
     def test_skill_pins_reference_server_version(self) -> None:

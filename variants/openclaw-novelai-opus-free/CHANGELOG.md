@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 - 2026-09-24
+
+- Added up to three sequential retries after the initial attempt for transient failures.
+- Kept exact parameters on retries and blocked retries for billing, account, parameter, or ambiguous processing failures.
+
 ## 0.2.1 - 2026-09-23
 
 - Added same-session verification reuse when billing-affecting parameters remain unchanged.

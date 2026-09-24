@@ -6,6 +6,8 @@ This variant keeps story writing, prompt planning, account queries, cost estimat
 
 It blocks image-to-image, ordinary inpainting, Vibe Transfer, Precise Reference, Director tools, Enhance, dedicated upscaling, batches, and any paid fallback.
 
+After the first successful zero-Anlas verification, the same conversation may reuse the verified billing profile indefinitely while billing-affecting parameters remain unchanged. Transient failures may be retried sequentially up to three times after the initial attempt with identical parameters; billing, account, parameter, and ambiguous processing failures are not retried automatically.
+
 ## Important distinction
 
 Zero Anlas is not zero usage:

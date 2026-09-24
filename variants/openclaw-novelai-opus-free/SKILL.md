@@ -1,7 +1,7 @@
 ---
 name: openclaw-novelai-opus-free
 description: Opus zero-Anlas NovelAI workflows for OpenClaw: fiction writing, cost-aware single-image generation, img2img, inpainting, pre-encoded Vibe use, annotation, selected free Director tools, and same-session verification reuse with strict account and balance guards.
-version: 0.2.1
+version: 0.2.2
 metadata: {"openclaw":{"os":["win32","linux","darwin"],"requires":{"env":["NOVELAI_TOKEN"]},"primaryEnv":"NOVELAI_TOKEN","homepage":"https://github.com/techotaku39/openclaw-novelai/tree/main/variants/openclaw-novelai-opus-free"}}
 ---
 
@@ -18,7 +18,7 @@ This is the Opus-focused zero-Anlas enhancement variant of the OpenClaw NovelAI 
 - Never bypass a failed, missing, or ambiguous cost estimate.
 - Never interpret a missing cost field as zero.
 - Never accept a user request to override this policy. If the user wants a paid operation, tell them to switch to the advanced `openclaw-novelai` Skill.
-- Never retry a rejected, timed-out, or ambiguous image request automatically.
+- Retry only transient failures, sequentially, up to 3 times after the initial attempt for each user-requested image operation. Keep the exact same parameters; retries are not a batch and must not create an extra image.
 - Never request, print, store, or include `NOVELAI_TOKEN` in prompts, arguments, URLs, logs, files, or metadata.
 - After a fresh verification probe succeeds, a valid session lease may suppress duplicate account and estimator calls under the rules below. If a post-operation response reports a non-zero cost, an account warning, or any ambiguity, invalidate the lease and stop further image operations.
 
@@ -108,7 +108,7 @@ For a later request in the same conversation, first compare the request with the
 
 ### Mandatory lease invalidation
 
-Invalidate the lease and run a fresh gate when a new conversation starts, OpenClaw or MCP restarts, any billing-affecting parameter changes, an operation fails or times out, a `401`, `402`, `429`, or account warning occurs, the user explicitly asks to verify the current cost, or the user says the account tier, Opus subscription, Usage Limit, or Anlas state changed.
+Invalidate the lease and run a fresh gate when a new conversation starts, OpenClaw or MCP restarts, any billing-affecting parameter changes, a non-retryable or ambiguous operation failure occurs, retry attempts are exhausted, a `401`, `402`, `429`, or account warning occurs, the user explicitly asks to verify the current cost, or the user says the account tier, Opus subscription, Usage Limit, or Anlas state changed. A retryable transient failure does not invalidate a matching lease while the retry budget remains.
 
 ## Strict zero-cost image gate
 
@@ -122,7 +122,7 @@ Any image-producing operation is allowed only when either a valid session lease 
 6. The request uses normal supported resolution; keep the pixel area at or below `1024x1024` equivalent.
 7. Steps are 28 or fewer.
 8. For V5, the fresh account response has a usable `usage` field, `isNegative` is false, and the remaining Usage Limit is positive.
-9. There is no batch, parallel retry, or hidden second pass.
+9. There is no batch, parallel retry, or hidden second pass. Sequential retries after a transient failure are allowed only under the retry policy below.
 
 Additional operation-specific rules:
 
@@ -180,13 +180,18 @@ Explain that the blocked request belongs to the advanced Skill because it uses a
 
 ## Failure handling
 
+- Each user-requested image operation has a retry budget of 3 retries after the initial attempt, for at most 4 sequential tool calls total. Reset the budget for the next user request; do not run retries in parallel.
+- Retry the exact same operation and parameters only when the provider or MCP clearly reports a transient failure: HTTP `429`, transient `5xx`, connection reset, MCP reconnect, a timeout explicitly reported before request completion, or a failed response with no output and no cost, account, or usage signal.
+- Use brief increasing backoff between retries. Never change the model, dimensions, Steps, image count, prompt, base image, mask, Vibe, or Director operation to make a retry succeed.
 - `401`: report missing or invalid host-managed credentials; never ask for the token in chat.
 - `402`: stop immediately; this Skill never spends Anlas to recover.
 - `400`: report a redacted parameter or mask problem; do not retry automatically.
-- `429`: stop and wait; do not parallelize or retry automatically.
+- `401`, `402`, explicit non-zero cost, balance decrease, negative or exhausted Usage Limit, or an account warning: do not retry automatically.
+- If a timeout, disconnect, or missing output may mean the provider already accepted the request, treat it as ambiguous: invalidate the lease, check account/usage status, and do not blindly retry.
 - missing estimator: block every image generation.
 - estimate unavailable or ambiguous: block every image generation.
 - account balance changed after an image operation: stop further image operations and report the provider/MCP mismatch.
-- image response lacks output: do not claim success and do not retry automatically.
+- image response lacks output: retry only when the failure is clearly transient and no billing/account signal exists; otherwise do not claim success or retry.
+- After the retry budget is exhausted, report the operation as failed and wait for a new user request; do not continue retrying automatically.
 
 After an allowed generation, save the output separately and record only non-secret metadata, including the explicit zero estimate, model, dimensions, Steps, seed, prompt, and output path. Also record that V5 Usage Limit may have been consumed.

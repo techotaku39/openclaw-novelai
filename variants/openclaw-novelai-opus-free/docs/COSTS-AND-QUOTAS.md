@@ -33,7 +33,7 @@ All conditions must hold:
 6. The resolution is within the normal range (keep the area at or below a 1024x1024 equivalent);
 7. Steps are 28 or fewer;
 8. Img2img/inpaint may use a base image or mask only when the exact estimator returns zero; Vibe may use only existing encoded V4/V4.5 references; Director is limited to the five tested tools and excludes background removal;
-9. There is no batch, parallel generation, or automatic retry.
+9. There is no batch, parallel generation, or parallel retry. A transient failure may be retried sequentially up to 3 times after the initial attempt, with the exact same parameters; ambiguous or billing-related failures are not retried automatically.
 
 If any condition is not met, the image tool must not be called. After the first successful gate and balance audit, the same conversation may reuse the verified billing profile indefinitely while billing-affecting parameters remain unchanged. Do not repeat account or estimator calls for a matching request. Invalidate the session lease on a new conversation, OpenClaw/MCP restart, parameter change, tool error, account warning, explicit cost recheck request, or any reported Anlas/Usage Limit discrepancy.
 

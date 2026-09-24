@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Synchronized the main Skill and strict Free variant with the Opus Free same-session billing-profile reuse and bounded transient retry policy.
+- Added versioned updates for the main Skill (`0.1.2`) and strict Free variant (`0.1.1`).
+- Added up to three sequential retries for transient Opus Free image-operation failures while preserving exact parameters and billing safeguards.
 - Improved the Opus Free variant to reuse a verified zero-Anlas billing profile throughout the same session while parameters remain unchanged.
 - Added the local `openclaw-novelai-free` zero-Anlas policy variant under `variants/`.
 - Added the local `openclaw-novelai-opus-free` Opus enhancement variant with the latest live-tested zero-Anlas boundaries.

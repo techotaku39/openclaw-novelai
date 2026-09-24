@@ -1,13 +1,13 @@
 ---
 name: openclaw-novelai
-description: NovelAI creative workflows for OpenClaw: fiction context, chapter planning, image prompting, V5/V4.5 generation, img2img, inpainting, Vibe/Director tools, cost-aware execution, and secret-safe asset records.
-version: 0.1.1
+description: NovelAI creative workflows for OpenClaw: fiction context, chapter planning, image prompting, V5/V4.5 generation, img2img, inpainting, Vibe/Director tools, cost-aware execution, same-session billing-profile reuse, bounded transient retries, and secret-safe asset records.
+version: 0.1.2
 metadata: {"openclaw":{"os":["win32","linux","darwin"],"requires":{"env":["NOVELAI_TOKEN"],"bins":["python"]},"primaryEnv":"NOVELAI_TOKEN","homepage":"https://github.com/techotaku39/openclaw-novelai"}}
 ---
 
 # OpenClaw NovelAI
 
-Use this skill when the user wants a NovelAI-assisted story workflow in OpenClaw: long-form writing, chapter context, character consistency, advanced image generation, image editing, or asset tracking.
+Use this skill when the user wants a NovelAI-assisted story workflow in OpenClaw: long-form writing, chapter context, character consistency, advanced image generation, image editing, or asset tracking. It may reuse a verified billing profile in the same conversation when billing-affecting parameters remain unchanged.
 
 This skill is an orchestration guide. It does not contain or request a NovelAI credential. It assumes that the operator has configured a NovelAI text provider and, for image operations, an MCP server exposing the NovelAI Image MCP tools.
 
@@ -80,6 +80,14 @@ Recommended text actions:
 
 Do not assume that a NovelAI text model supports ordinary instruction-following behavior. Prefer a clear continuation prompt and include the relevant context files.
 
+## Session-scoped billing profile and retry policy
+
+When a current tool schema provides account or cost information, keep only a redacted billing profile in memory for the current OpenClaw conversation after a successful verification or exact cost estimate. Never store prompts, image bytes, paths, balances, account identifiers, or credentials. Reuse the profile indefinitely in the same conversation when the operation type, model, dimensions, Steps, image count, sampler/scale/noise, base image, mask, reference, Vibe, and Director operation remain unchanged; a prompt change alone may reuse it when the provider does not price prompt text separately.
+
+Invalidate the profile on a new conversation, OpenClaw/MCP restart, any billing-affecting parameter change, tool error, account warning, an ambiguous result that may mean the provider already accepted the request, or an explicit request to recheck cost. Reuse never bypasses a user confirmation requirement, a paid-operation warning, or a provider-specific restriction.
+
+For each user-requested image operation, allow up to 3 sequential retries after the initial attempt, for at most 4 tool calls total. Retry the exact same parameters only for transient `429`, transient `5xx`, connection reset, MCP reconnect, an explicitly incomplete timeout, or a failed response with no output and no billing/account signal. Do not retry `400`, `401`, `402`, explicit charges, account/Usage Limit warnings, or ambiguous cases where the request may already have been accepted. Use brief increasing backoff; never retry in parallel or turn a retry into a batch.
+
 ## Image workflow
 
 ### Text to image
@@ -143,7 +151,7 @@ python {baseDir}/scripts/project_state.py record --project-dir <project-dir> --k
 
 ## Cost and confirmation policy
 
-The following may consume NovelAI resources depending on the account and model: image generation, image-to-image, inpainting, Vibe encoding, Director tools, and upscaling. A user request to perform the operation is authorization for a single small operation; ask before an ambiguous batch, a high-resolution request, or a repeated retry.
+The following may consume NovelAI resources depending on the account and model: image generation, image-to-image, inpainting, Vibe encoding, Director tools, and upscaling. A user request to perform the operation is authorization for a single small operation; ask before an ambiguous batch, a high-resolution request, or retries beyond the automatic three-retry budget.
 
 Account and cost tools are informational and do not replace the user's responsibility to check current NovelAI pricing and subscription rules.
 
@@ -154,9 +162,9 @@ Map failures to an actionable explanation:
 - `401`: credential missing, expired, or invalid; do not request the credential in chat.
 - `402`: subscription or Anlas limitation; do not retry automatically.
 - `400`: model, parameter, image, or mask mismatch; report the rejected field if returned.
-- `429`: rate/concurrency limit; wait and avoid parallel retries.
+- `429`: rate/concurrency limit; retry the exact same request sequentially up to 3 times after the initial attempt with brief backoff; stop afterward.
 - `404` from `/ai/upscale`: the dedicated upscaler route is unavailable on the active NovelAI host; do not retry blindly, and offer larger-resolution img2img or local upscaling as a different operation.
-- timeout/network error: preserve the original input and retry only with user approval.
+- timeout/network error: preserve the original input and retry up to 3 times only when the provider clearly reports that the request was not completed; if it may already have been accepted, treat it as ambiguous and check status before any further retry.
 - missing tool: report MCP configuration or tool allowlist issue; do not fall back silently.
 
 After every successful generation, record metadata without secrets. After every failed generation, do not claim that an asset was produced.
